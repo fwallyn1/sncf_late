@@ -15,4 +15,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag sncf-on-time:$(date +%s)
+    - uses: 'actions/checkout@v3'
+    - id: auth
+      name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.SERVICE_ACCOUNT }}
+    - name: Tag the docker image
+      run: docker tag thedataquiz europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
+    - name: Push the docker image
+      run: docker push europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
