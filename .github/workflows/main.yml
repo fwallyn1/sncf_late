@@ -9,17 +9,18 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    steps:
-    - id: auth
-      name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.SERVICE_ACCOUNT }}
+    steps:      
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag sncf-on-time:$(date +%s)
     - uses: 'actions/checkout@v3'
     - name: Tag the docker image
-      run: docker tag thedataquiz europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
+      run: docker tag sncf-on-time europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
+    - name: Login to GAR
+        uses: docker/login-action@v2
+        with:
+          registry: europe-west9-docker.pkg.dev
+          username: _json_key
+          password: ${{ steps.auth.outputs.access_token }}
     - name: Push the docker image
       run: docker push europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
