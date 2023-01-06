@@ -41,7 +41,7 @@ def run(token, date, ville):
     df_final = df_final[["direction", "network","name","headsign","label","arrival_date_time","departure_date_time","base_arrival_date_time","base_departure_date_time","delay","is_delayed"]]
     print(df_final)
     credentials = service_account.Credentials.from_service_account_info(json.loads(service_account_info))
-    df_final.to_gbq(destination_table='francois_sncf.sncf_train_table', project_id='ensai-2023-373710',credentials=credentials,location="europe-west9")
+    df_final.to_gbq(destination_table=f'francois_sncf.sncf_train_table_{date.strftime("%Y-%m-%d")}_{ville}', project_id='ensai-2023-373710',credentials=credentials,location="europe-west9")
 
 if __name__ == '__main__':
     run()
