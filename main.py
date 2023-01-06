@@ -8,6 +8,7 @@ import pandas_gbq
 from google.oauth2 import service_account
 import json
 
+
 STOPS = {
     "Rennes": "87471003"
 }
