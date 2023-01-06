@@ -34,7 +34,7 @@ def run(token, date, ville):
     for col in df[["display_informations","stop_date_time"]].columns:
         outputs.append(pd.json_normalize(df[col]))
     df_final = pd.concat(outputs,axis=1)
-    for col in ["arrival_date_time","departure_date_time","appendbase_arrival_date_time","base_departure_date_time"]:
+    for col in ["arrival_date_time","departure_date_time","base_arrival_date_time","base_departure_date_time"]:
         df_final[col] = pd.to_datetime(df_final[col], format='%Y%m%dT%H%M%S')
     df_final["delay"] = df_final["arrival_date_time"] - df_final["base_arrival_date_time"]
     df_final["delay"] = df_final["delay"].apply(lambda x : x.total_seconds())
