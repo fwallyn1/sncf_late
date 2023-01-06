@@ -23,7 +23,7 @@ jobs:
       with:
         registry: europe-docker.pkg.dev
         username: _json_key
-        password: ${{ secrets.GOOGLE_CREDENTIALS }}
+        password: ${{ secrets.SERVICE_ACCOUNT }}
 
     - name: Push the docker image
       run: docker push europe-west9-docker.pkg.dev/ensai-2023-373710/francois-depot/sncf-on-time
